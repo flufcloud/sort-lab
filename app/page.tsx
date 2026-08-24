@@ -14,6 +14,8 @@ const algorithms: { id: Algorithm; name: string; complexity: string; description
   { id: "heap", name: "Heap Sort", complexity: "O(n log n)", description: "Builds a max heap and extracts its largest value repeatedly." },
 ];
 
+const starterValues = [73, 34, 61, 25, 88, 46, 19, 77, 52, 31, 68, 42, 91, 28, 57, 14, 82, 39, 65, 22, 75, 48, 85, 36];
+
 function randomValues(size: number) {
   return Array.from({ length: size }, () => Math.floor(Math.random() * 85) + 10);
 }
@@ -153,7 +155,7 @@ export default function Home() {
   const [algorithm, setAlgorithm] = useState<Algorithm>("bubble");
   const [size, setSize] = useState(24);
   const [speed, setSpeed] = useState(55);
-  const [values, setValues] = useState(() => randomValues(24));
+  const [values, setValues] = useState(starterValues);
   const [frame, setFrame] = useState<Frame>({ values, active: [], sorted: [], comparisons: 0, swaps: 0 });
   const [status, setStatus] = useState<"ready" | "running" | "paused" | "done">("ready");
   const framesRef = useRef<Frame[]>([]);
