@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sort Lab — Algorithm Visualizer",
-  description: "Watch six classic sorting algorithms work, one comparison at a time.",
+  title: "Sort Lab — DSL Workbench",
+  description: "Define objects, a total order, and a sorting algorithm, then inspect its execution trace.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
