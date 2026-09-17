@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AgentChat } from "./AgentChat";
 import { executeSortProgram, parseSortProgram, type ExecutionResult, type SortProgram, type TraceFrame, type ValidationError } from "@/lib/sort-dsl";
 import { presets } from "@/lib/sort-presets";
 
@@ -97,6 +98,7 @@ export default function Home() {
 
   return (
     <main className="app-shell">
+      <AgentChat />
       <header className="topbar">
         <a className="brand" href="#workbench" aria-label="Sort Lab home">
           <span className="brand-glyph" aria-hidden="true">S/</span>

@@ -22,6 +22,7 @@ test("server-renders the DSL workbench", async () => {
   assert.match(html, /DSL Workbench/);
   assert.match(html, /Sort program/);
   assert.match(html, /Story sentences/);
+  assert.match(html, /Agent/);
   assert.match(html, /Validate &amp; compile/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
