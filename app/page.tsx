@@ -43,6 +43,7 @@ export default function Home() {
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(58);
+  const [showDefinition, setShowDefinition] = useState(false);
 
   const frame = execution.trace[Math.min(step, execution.trace.length - 1)];
   const rank = useMemo(() => new Map(execution.target.map((id, index) => [id, index])), [execution.target]);
@@ -57,6 +58,15 @@ export default function Home() {
     }, Math.max(90, 720 - speed * 7));
     return () => window.clearTimeout(timer);
   }, [execution.trace.length, playing, speed, step]);
+
+  useEffect(() => {
+    if (!showDefinition) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setShowDefinition(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [showDefinition]);
 
   const loadProgram = (program: SortProgram) => {
     const result = safeExecute(program);
@@ -104,9 +114,45 @@ export default function Home() {
           <span className="brand-glyph" aria-hidden="true">S/</span>
           <span>Sort Lab</span>
         </a>
-        <div className="product-title"><span>DSL Workbench</span><i>v1</i></div>
-        <div className="runtime-state"><span className={errors.length ? "error-dot" : "ready-dot"} />{errors.length ? "Needs attention" : "Program valid"}</div>
+        <div className="product-title"><span>Sorting studio</span></div>
+        <button className="definition-trigger" type="button" onClick={() => setShowDefinition(true)}>Definition</button>
+        <div className="runtime-state"><span className={errors.length ? "error-dot" : "ready-dot"} />{errors.length ? "Needs attention" : "Ready"}</div>
       </header>
+
+      {showDefinition && <button className="definition-backdrop" type="button" aria-label="Close definition" onClick={() => setShowDefinition(false)} />}
+      {showDefinition && (
+        <aside className="editor-panel definition-drawer" role="dialog" aria-modal="true" aria-labelledby="definition-title">
+          <div className="panel-heading">
+            <div><p className="kicker">Advanced</p><h1 id="definition-title">Underlying definition</h1></div>
+            <button className="definition-close" type="button" aria-label="Close definition" onClick={() => setShowDefinition(false)}>×</button>
+          </div>
+
+          <span className="file-name">definition.json</span>
+          <textarea value={source} onChange={(event) => setSource(event.target.value)} spellCheck={false} aria-label="Sort definition JSON" />
+
+          {errors.length > 0 && (
+            <div className="error-list" role="alert">
+              {errors.slice(0, 4).map((item, index) => <p key={`${item.path}-${index}`}><code>{item.path}</code>{item.message}</p>)}
+              {errors.length > 4 && <p>+ {errors.length - 4} more errors</p>}
+            </div>
+          )}
+
+          <div className="editor-actions">
+            <span>{source.split("\n").length} lines</span>
+            <button className="apply-button" onClick={applySource}>Validate & compile</button>
+          </div>
+
+          <section className="contract-card">
+            <p className="kicker">Compiled contract</p>
+            <dl>
+              <div><dt>Objects</dt><dd>{execution.program.objects.length} unique IDs</dd></div>
+              <div><dt>Order</dt><dd>{orderLabel}</dd></div>
+              <div><dt>Tie-break</dt><dd>Original input position</dd></div>
+              <div><dt>Trace</dt><dd>{execution.trace.length} immutable frames</dd></div>
+            </dl>
+          </section>
+        </aside>
+      )}
 
       <section className="workbench" id="workbench">
         <aside className="example-rail">
@@ -132,37 +178,6 @@ export default function Home() {
             </ol>
           </div>
         </aside>
-
-        <section className="editor-panel" aria-label="DSL editor">
-          <div className="panel-heading">
-            <div><p className="kicker">Definition</p><h1>Sort program</h1></div>
-            <span className="file-name">program.sort.json</span>
-          </div>
-
-          <textarea value={source} onChange={(event) => setSource(event.target.value)} spellCheck={false} aria-label="Sort program JSON" />
-
-          {errors.length > 0 && (
-            <div className="error-list" role="alert">
-              {errors.slice(0, 4).map((item, index) => <p key={`${item.path}-${index}`}><code>{item.path}</code>{item.message}</p>)}
-              {errors.length > 4 && <p>+ {errors.length - 4} more errors</p>}
-            </div>
-          )}
-
-          <div className="editor-actions">
-            <span>{source.split("\n").length} lines</span>
-            <button className="apply-button" onClick={applySource}>Validate & compile</button>
-          </div>
-
-          <section className="contract-card">
-            <p className="kicker">Compiled contract</p>
-            <dl>
-              <div><dt>Objects</dt><dd>{execution.program.objects.length} unique IDs</dd></div>
-              <div><dt>Order</dt><dd>{orderLabel}</dd></div>
-              <div><dt>Tie-break</dt><dd>Original input position</dd></div>
-              <div><dt>Trace</dt><dd>{execution.trace.length} immutable frames</dd></div>
-            </dl>
-          </section>
-        </section>
 
         <section className="execution-panel" aria-label="Execution trace">
           <div className="execution-heading">

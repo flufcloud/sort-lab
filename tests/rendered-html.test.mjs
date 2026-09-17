@@ -12,17 +12,17 @@ async function render() {
   );
 }
 
-test("server-renders the DSL workbench", async () => {
+test("server-renders the sorting studio with the definition collapsed", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Sort Lab — DSL Workbench<\/title>/i);
-  assert.match(html, /DSL Workbench/);
-  assert.match(html, /Sort program/);
+  assert.match(html, /<title>Sort Lab — Sorting Studio<\/title>/i);
+  assert.match(html, /Sorting studio/);
+  assert.match(html, /Definition/);
   assert.match(html, /Story sentences/);
   assert.match(html, /Agent/);
-  assert.match(html, /Validate &amp; compile/);
+  assert.doesNotMatch(html, /Sort program|Validate &amp; compile/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });

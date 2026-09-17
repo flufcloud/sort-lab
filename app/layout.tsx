@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sort Lab — DSL Workbench",
+  title: "Sort Lab — Sorting Studio",
   description: "Define objects, a total order, and a sorting algorithm, then inspect its execution trace.",
   icons: {
     icon: "/favicon.svg",
