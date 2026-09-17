@@ -219,7 +219,7 @@ export default function Home() {
 
           <div className="transport">
             <button className="square-button" onClick={() => { setPlaying(false); setStep(0); }} aria-label="Reset trace">↺</button>
-            <button className="play-button" onClick={togglePlayback}>{playing ? "Pause" : step >= execution.trace.length - 1 ? "Replay" : "Run trace"}</button>
+            <button className="play-button transport-play" onClick={togglePlayback} aria-label={playing ? "Pause sorting" : step >= execution.trace.length - 1 ? "Replay sorting" : "Play sorting"} title={playing ? "Pause" : "Play"}>{playing ? "Ⅱ" : "▶"}</button>
             <button className="square-button" onClick={() => { setPlaying(false); setStep((current) => Math.min(current + 1, execution.trace.length - 1)); }} aria-label="Next operation">→</button>
             <label><span>Speed</span><input aria-label="Trace speed" type="range" min="10" max="90" value={speed} onChange={(event) => setSpeed(Number(event.target.value))} /></label>
           </div>

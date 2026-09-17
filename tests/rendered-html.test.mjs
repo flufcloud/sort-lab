@@ -23,6 +23,8 @@ test("server-renders the sorting studio with the definition collapsed", async ()
   assert.match(html, /Definition/);
   assert.match(html, /Story sentences/);
   assert.match(html, /Agent/);
+  assert.match(html, /Play sorting/);
+  assert.doesNotMatch(html, /Run trace/);
   assert.doesNotMatch(html, /Sort program|Validate &amp; compile/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });

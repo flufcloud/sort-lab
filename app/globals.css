@@ -122,6 +122,7 @@ h1, h2, h3, p { margin-top: 0; }
 .square-button, .play-button { min-height: 2.65rem; border-radius: .35rem; cursor: pointer; }
 .square-button { width: 2.65rem; border: 1px solid var(--line); background: var(--surface); }
 .play-button { min-width: 7rem; padding: 0 1rem; border: 1px solid var(--green-dark); background: var(--green); color: white; font-size: .78rem; font-weight: 750; }
+.transport-play { width: 2.65rem; min-width: 2.65rem; padding: 0; font-size: .8rem; }
 .transport label { display: flex; flex: 1; align-items: center; gap: .8rem; margin-left: .6rem; color: var(--muted); font-size: .7rem; }
 .transport input { width: 100%; accent-color: var(--green); }
 .event-data { margin-top: .85rem; border-top: 1px solid var(--line); }
